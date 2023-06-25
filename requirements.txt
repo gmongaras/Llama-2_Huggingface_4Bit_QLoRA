@@ -1,0 +1,6 @@
+datasets>=2.8.0
+peft>=0.4.0.dev0
+transformers>=4.30.1
+accelerate>=0.20.3
+bitsandbytes>=0.39.0
+wandb>=0.14.2
