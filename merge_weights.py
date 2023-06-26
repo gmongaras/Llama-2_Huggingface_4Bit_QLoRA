@@ -35,8 +35,12 @@ for key in key_list:
     parent = model.get_submodule(".".join(key.split(".")[:-1]))
     target_name = key.split(".")[-1]
     if isinstance(sub_mod, peft.tuners.lora.Linear):
+        sub_mod.merge()
         bias = sub_mod.bias is not None
         new_module = torch.nn.Linear(sub_mod.in_features, sub_mod.out_features, bias=bias)
+        new_module.weight.data = sub_mod.weight
+        if bias:
+            new_module.bias.data = sub_mod.bias
         model.base_model._replace_module(parent, target_name, new_module, sub_mod)
 
 model = model.base_model.model
