@@ -31,8 +31,11 @@ model.eval()
 
 key_list = [key for key, _ in model.base_model.model.named_modules() if "lora" not in key]
 for key in key_list:
-    sub_mod = model.get_submodule(key)
-    parent = model.get_submodule(".".join(key.split(".")[:-1]))
+    try:
+        sub_mod = model.get_submodule(key)
+        parent = model.get_submodule(".".join(key.split(".")[:-1]))
+    except AttributeError:
+        continue
     target_name = key.split(".")[-1]
     if isinstance(sub_mod, peft.tuners.lora.Linear):
         sub_mod.merge()

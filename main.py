@@ -22,11 +22,20 @@ lora_alpha = 16             # How much to weigh LoRA params over pretrained para
 lora_dropout = 0.1          # Dropout for LoRA weights to avoid overfitting
 lora_r = 16                 # Bottleneck size between A and B matrix for LoRA params
 lora_bias = "all"           # "all" or "none" for LoRA bias
+model_type = "llama"     # falcon or llama
 lora_target_modules = [     # Which modules to apply LoRA to (names of the modules in state_dict)
     "query_key_value",
     "dense",
     "dense_h_to_4h",
     "dense_4h_to_h",
+] if model_type == "falcon" else [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
 ]
 
 # Trainer params
@@ -57,14 +66,14 @@ if load_in_4bit == True:
         bnb_4bit_use_double_quant=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
-        "tiiuae/falcon-7b", 
+        "tiiuae/falcon-7b" if model_type == "falcon" else "meta-llama/Llama-2-7b-hf",
         trust_remote_code=True, 
         device_map="auto", 
         quantization_config=bnb_config
     )
 else:
     model = AutoModelForCausalLM.from_pretrained(
-        "tiiuae/falcon-7b", 
+        "tiiuae/falcon-7b" if model_type == "falcon" else "meta-llama/Llama-2-7b-hf",
         trust_remote_code=True, 
         device_map="auto", 
         load_in_8bit=True,
@@ -74,7 +83,7 @@ else:
 
 # Load in the tokenizer
 tokenizer = AutoTokenizer.from_pretrained(
-    "tiiuae/falcon-7b",
+    "tiiuae/falcon-7b" if model_type == "falcon" else "meta-llama/Llama-2-7b-hf",
     trust_remote_code=True,
 )
 tokenizer.pad_token = tokenizer.eos_token
