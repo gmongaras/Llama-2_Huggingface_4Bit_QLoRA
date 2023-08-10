@@ -1,5 +1,5 @@
-# Huggingface_4Bit_QLoRA_Falcon_Example
-A working example of a 4bit QLoRA Falcon model using huggingface
+# Llama-2_Huggingface_4Bit_QLoRA
+A working example of a 4bit QLoRA Falcon/Llama2 model using huggingface
 
 To start finetuning, edit  and run `main.py`
 
@@ -10,7 +10,7 @@ Finally, you can run `generate.py` for example generation given the merged model
 # Requirements
 The python requirements to run the script are located in requirements.txt
 
-You should also download the weights of the 7B model here `https://huggingface.co/tiiuae/falcon-7b` and put the files in a directory `./tiiuae/falcon-7b`
+You should also download the Falcon weights of the 7B model here `https://huggingface.co/tiiuae/falcon-7b` and put the files in a directory `./tiiuae/falcon-7b` or download the Llama-2 weights here `https://huggingface.co/meta-llama/Llama-2-7b-hf` and put them in a directory named `./llama-2`
 
 # Multiple GPUs
 This script does not support multi-gpus on 4-bit finetuning. If I find a way to do this, I will update the script.
