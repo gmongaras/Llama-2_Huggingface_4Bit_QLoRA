@@ -1,3 +1,10 @@
+# Update Note
+An updated version can be found in a new repo
+
+https://github.com/gmongaras/Wizard_QLoRA_Finetuning
+
+
+
 # Llama-2_Huggingface_4Bit_QLoRA
 A working example of a 4bit QLoRA Falcon/Llama2 model using huggingface
 
